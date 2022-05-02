@@ -52,7 +52,8 @@
       - unordered collections of pages, tuple are stored in random order
       - need some mrta-data to track what pages exsist and which ones have free space
       - represented by: Linked List(dumb)/Page directory
-        - bi-directional linked list <img src='./pictures/heapfile_linked-list.png' width='300' height='200'>
+        - bi-directional linked list 
+  <img src='./pictures/heapfile_linked-list.png' width='300' height='200'>
           - cost: search cost is expensive O(n)
         - Page directory <img src='./pictures/page_directory.png' width='300' height='400'>
           - search cost is much lower, but need to keep the directory and data pages in sync.
@@ -62,7 +63,8 @@
 - page layout
   - how to organize a single page
     - header & data
-      - slotted pages: in practice, nobody store tuple from different tables in one page <img src='./pictures/slotted_page.png' width='300' height='300'>
+      - slotted pages: in practice, nobody store tuple from different tables in one page 
+  <img src='./pictures/slotted_page.png' width='300' height='300'>
       - tuple grows from end to begin, and slot array grows from begin to end
 - tuple layout
   - tuples are just sequence of bytes being interpreted by the dbms.
