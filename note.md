@@ -51,6 +51,25 @@
     - heap file organization
       - unordered collections of pages, tuple are stored in random order
       - need some mrta-data to track what pages exsist and which ones have free space
-      - represented by: Linked List(dumb)/Page directory <img src='./pictures/heapfile_linked-list.png' width='300' height='200'>
+      - represented by: Linked List(dumb)/Page directory
+        - bi-directional linked list <img src='./pictures/heapfile_linked-list.png' width='300' height='200'>
+          - cost: search cost is expensive O(n)
+        - Page directory <img src='./pictures/page_directory.png' width='300' height='400'>
+          - search cost is much lower, but need to keep the directory and data pages in sync.
     - sequential/sorted file organization
     - hashing file organization
+  
+- page layout
+  - how to organize a single page
+    - header & data
+      - slotted pages: in practice, nobody store tuple from different tables in one page <img src='./pictures/slotted_page.png' width='300' height='300'>
+      - tuple grows from end to begin, and slot array grows from begin to end
+- tuple layout
+  - tuples are just sequence of bytes being interpreted by the dbms.
+  - layout
+  <img src='./pictures/tuple_layout.png' width='300' height='100'>
+  - denormalization (prejoin): some dbms may store tables related (with foreign keys) in the same page, just to reduce the IO cost of join, but increase the cost of updating
+  - tuple identifier
+    - dbms manages an identifier for every tuple, it is mostly organized like (pageId, slotId) or sth like that.
+    - the upper levels doesn't care about these identifiers, they simply use them to locate a specific tuple but does not care about what the identifier actually is.  
+    - these identifiers are not reliable. because they may be frequently changed based on what the dbms application is designed. if a slot is deleted, some dbms applications may leave the slot empty and some may not, that depends.
