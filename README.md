@@ -1,2 +1,5 @@
 # cmu15445-note
-note when taking cmu 15445 course
+
+Note when taking cmu 15445 course
+
+Projects are not included as the course required
