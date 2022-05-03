@@ -14,7 +14,7 @@
 
 - recursive function
 
-## DataBase Storage
+## DataBase Storage I
 
 - volitile & non-volatile
   - volitile: Random access and byte addressable
@@ -52,11 +52,11 @@
       - unordered collections of pages, tuple are stored in random order
       - need some mrta-data to track what pages exsist and which ones have free space
       - represented by: Linked List(dumb)/Page directory
-        - bi-directional linked list 
+        - bi-directional linked list
           - <img src='./pictures/heapfile_linked-list.png' width='300' height='200'>
 
           - cost: search cost is expensive O(n)
-        - Page directory 
+        - Page directory
           - <img src='./pictures/page_directory.png' width='300' height='400'>
           - search cost is much lower, but need to keep the directory and data pages in sync.
     - sequential/sorted file organization
@@ -77,3 +77,42 @@
     - dbms manages an identifier for every tuple, it is mostly organized like (pageId, slotId) or sth like that.
     - the upper levels doesn't care about these identifiers, they simply use them to locate a specific tuple but does not care about what the identifier actually is.  
     - these identifiers are not reliable. because they may be frequently changed based on what the dbms application is designed. if a slot is deleted, some dbms applications may leave the slot empty and some may not, that depends.
+
+## Database Storage II
+
+- tuple storage
+  - tuples are just sequence of bytes, and is interpreted by the dbms using the catalogs
+
+- data represdentation
+  - reals
+    - IEEE float point standard
+      - fast (CPU has instuctions to process)
+      - rounding errors
+      - the rounding is performs on the client side
+    - fixed precision decimals:
+      - used when rounding errors are not acceptable (bank, ...)
+      - like varchar, storing what the decimal is exactly is
+      - **much slower**
+      - stores like a struct
+  - tuples are not allowed to exceed the size of a page, what if the data is bigger than a page?
+    - use other pages (or other file) to store overflow data and store pointer (or where the data can be found)
+      - <img src='./pictures/overflow.png' width='300' height='300'>
+
+- system catalogs
+  - stored in dbms, meta-data about databases contained in
+  - has standard
+
+- some models which may be more efficient than the relation model (based on situation)
+  - OLTP: online transsaction process
+    - process small amount of data, use very small amount of the dbms, like the user manipulates his own page, account etc...
+  - OLAP: online analysis process
+    - manipulating large amount of data. like manage the backend of a whole system
+  - n-ary storage: store the tuples continously (Row store)
+    - <img src='./pictures/n-ary.png' width='400' height='200'>
+    - easy to insert, uodate, delete
+    - expensive to scan large portions of data, because the whole page may need to copy to the memory
+    - this model is ideal for OLTP, in which the queries tend to operate only small entities, and do insert frequently
+  - disconposition storage model
+    - <img src='./pictures/decompos.png' width='400' height='200'>
+    - store the value of single column for all tuples continuously (column store)
+    - reduces IO costs, but slow down insert, update ...
