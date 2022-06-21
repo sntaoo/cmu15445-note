@@ -155,3 +155,22 @@
 - handle dirtu pages
   - pages whose dirty flag is 0 can be simply drop out when being evicted
   - pages whose dirty flag is 1 must be written back to the disk, then set dirty flag to 0 or just evict 
+
+## hash table
+
+- We need to organize a data stucture to manage the data stored in the memory/page, for more efficient operations and concurrency concern.
+
+- hash table
+  - hash function
+    - hash key to hash value, trade off between speed and collison rate
+  - hash scheme
+    - how to deal with collision
+  - facebook xxhash is the best hash function so far (when the key size if very large like 32,64, 128 bytes etc).
+  
+- some hash schemes, better look up to the slides
+  - static hash scheme
+    - linear probe(线性探查法)
+    - linked list(开散列)
+    - robin hood hashing
+      - similar to linear probe, every element record the distance to its optimal position. if the distance of the second element(the one to be inserted) is greater than the first one's, then the second one evict the first one to the next slot and take its place.
+  - dynamic hash scheme, like .....hard to write.
